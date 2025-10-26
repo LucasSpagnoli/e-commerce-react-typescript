@@ -1,73 +1,81 @@
-# React + TypeScript + Vite
+# React E-Commerce Showcase (Frontend)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Este é o front-end de um site de e-commerce moderno, construído com React, TypeScript e Tailwind CSS. O projeto demonstra o uso de hooks modernos, gerenciamento de estado centralizado com a Context API e um design totalmente responsivo e interativo.
 
-Currently, two official plugins are available:
+O aplicativo busca produtos de uma API (Fake Store API) e permite que os usuários visualizem, pesquisem e filtrem os produtos em tempo real.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+(imagem do site ainda não pronto, vai ficar mais bonito)
+<img width="1897" height="894" alt="image" src="https://github.com/user-attachments/assets/d48dbb52-76bb-4a2b-af9a-b1f6d5dcb619" />
 
-## React Compiler
+## ✨ Principais Funcionalidades
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+* **Busca de Produtos:** A barra de pesquisa no cabeçalho (desktop e mobile) filtra os produtos por nome em tempo real.
+* **Filtro por Categoria:** Um menu dropdown customizado com animação de fade-in/out permite filtrar produtos por categoria.
+* **Carrossel de Produtos:** A página inicial apresenta um carrossel "slice-based" para navegar pelos produtos em destaque.
+* **Gerenciamento de Estado Centralizado:** Todo o estado da aplicação (lista de produtos, filtros, busca, índice do carrossel) é gerenciado pelo `ProductContext` do React.
+* **Componentização:** A interface é dividida em componentes reutilizáveis como `ProductCard` e `Header`.
+* **Design Responsivo:** Totalmente funcional em dispositivos móveis e desktop, incluindo menus e barras de pesquisa adaptáveis.
 
-## Expanding the ESLint configuration
+## 🚀 Tecnologias Utilizadas
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+* **React:** Biblioteca principal para a construção da interface do usuário.
+* **TypeScript:** Para tipagem estática e um desenvolvimento mais robusto.
+* **Tailwind CSS:** Para estilização rápida e utilitária (utility-first).
+* **React Context API:** Para gerenciamento de estado global da aplicação.
+* **React Hooks:** Utilização de `useState`, `useEffect`, `useContext` e `useRef` para toda a lógica de estado e ciclo de vida.
+* **Vite:** Como ambiente de desenvolvimento e bundler.
+* **Fake Store API:** Como fonte de dados (backend) para os produtos.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## 🏛️ Arquitetura do Projeto
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+A arquitetura deste projeto é centralizada em torno do `ProductContext`, que atua como a "única fonte da verdade" (Single Source of Truth) para os dados dos produtos.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+1.  **`ProductContext.tsx` (O Cérebro):**
+    * Contém todos os estados principais: `products` (lista completa), `screenProducts` (lista filtrada), `searchBar` (termo da busca) e `currentIndex` (índice do carrossel).
+    * Executa a busca inicial de dados da API com `useEffect`.
+    * Expõe as funções de manipulação de estado: `handleFilter()`, `handleSearch()`, `setCurrentIndex()`, etc.
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+2.  **`Header.tsx` (O Consumidor de Ações):**
+    * Consome o contexto (`useContext`) para obter as funções de filtro/busca (`handleFilter`, `handleSearch`, `setSearchBar`).
+    * Gerencia o estado local do seu próprio menu dropdown (o `isOpen` com `useRef` para "clicar fora").
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+3.  **`Home.tsx` (O Consumidor de Dados):**
+    * Consome o contexto para obter a lista de produtos já fatiada (`shownProducts`).
+    * Renderiza os cards usando `.map()`.
+    * Contém a lógica de navegação do carrossel (`handleNext`, `handlePrev`) que chama `setCurrentIndex` do contexto.
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+4.  **`ProductCard.tsx` (Componente de Exibição):**
+    * Um componente "burro" que apenas recebe um `product` como prop e o exibe.
+
+## 🏁 Como Rodar o Projeto Localmente
+
+Siga os passos abaixo para executar o projeto em sua máquina.
+
+**Pré-requisitos:**
+* Node.js (v18 ou superior)
+* npm ou yarn
+
+**Passos:**
+
+1.  **Clone o repositório:**
+    ```bash
+    git clone [https://github.com/seu-usuario/nome-do-repositorio.git](https://github.com/seu-usuario/nome-do-repositorio.git)
+    cd nome-do-repositorio
+    ```
+
+2.  **Instale as dependências:**
+    ```bash
+    npm install
+    ```
+
+3.  **Execute o servidor de desenvolvimento:**
+    ```bash
+    npm run dev
+    ```
+
+4.  **Abra no navegador:**
+    Abra [http://localhost:5173](http://localhost:5173) (ou a porta indicada no seu terminal) para ver o projeto em ação.
+
+## 📄 Licença
+
+Este projeto está sob a licença MIT. Veja o arquivo [LICENSE.md](LICENSE.md) para mais detalhes.
