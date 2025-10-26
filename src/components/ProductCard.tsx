@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useContext, type JSX } from 'react';
 import type { Product } from '../scripts/api';
+import { CartContext } from '../context/cartContext'
 
 interface ProductCardProps {
     product: Product;
 }
 
 export function ProductCard({ product }: ProductCardProps): JSX.Element {
+    const { addToCart, cart } = useContext(CartContext)
     return (
         <div className="card md:w-65 w-100 rounded-lg shadow-lg bg-gray-100 card-hover mt-6 md:mt-0 position-relative">
             <a href="#">
@@ -47,6 +49,11 @@ export function ProductCard({ product }: ProductCardProps): JSX.Element {
                     <a
                         href="#"
                         className="btn text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-3 py-1.5 text-center focus:ring-gray-500"
+                        onClick={(e) => {
+                            e.preventDefault()
+                            addToCart(product)
+                            console.log(cart)
+                        }}
                     >
                         Add to cart
                     </a>

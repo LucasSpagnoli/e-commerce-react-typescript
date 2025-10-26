@@ -1,5 +1,5 @@
 import { ProductCard } from '../components/ProductCard'
-import { useContext } from 'react'
+import { useContext, type JSX } from 'react'
 import { ProductContext } from '../context/productContext'
 
 export function Home(): JSX.Element {

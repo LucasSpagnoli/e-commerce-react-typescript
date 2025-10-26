@@ -1,4 +1,5 @@
 import React, { useContext, useState, useEffect, useRef } from 'react';
+import { type JSX } from 'react';
 import { ProductContext } from '../context/productContext';
 
 export function Header(): JSX.Element {
@@ -16,7 +17,7 @@ export function Header(): JSX.Element {
 
     const [isOpen, setIsOpen] = useState(false);
 
-    const dropdownRef = useRef<HTMLDivElement | null>(null);
+    const dropdownRef = useRef<HTMLLIElement | null>(null);
 
     // lida com cliques fora do componente
     useEffect(() => {
@@ -34,8 +35,8 @@ export function Header(): JSX.Element {
     }, []);
 
     return (
-        <nav className="border-gray-200 bg-gradient-to-bl bg-black">
-            <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+        <nav className="border-gray-200 bg-linear-to-bl bg-black">
+            <div className="max-w-7xl flex flex-wrap items-center justify-between mx-auto p-4">
                 <span className="flex items-center space-x-3 rtl:space-x-reverse">
                     <span className="self-center text-2xl font-semibold whitespace-nowrap text-white">Store</span>
                 </span>
