@@ -4,6 +4,7 @@ Este é o front-end de um site de e-commerce moderno, construído com React, Typ
 
 O aplicativo busca produtos de uma API (Fake Store API) e permite que os usuários visualizem, pesquisem e filtrem os produtos em tempo real.
 
+(imagem do site ainda não pronto, vai ficar mais bonito)
 <img width="1897" height="894" alt="image" src="https://github.com/user-attachments/assets/d48dbb52-76bb-4a2b-af9a-b1f6d5dcb619" />
 
 ## ✨ Principais Funcionalidades
