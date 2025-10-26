@@ -17,10 +17,6 @@ input:focus {
   box-shadow: none;
 }
 
-.transicao {
-  transition: all 0.1s ease-in-out;
-}
-
 .products-container {
   position: relative;
   display: grid;

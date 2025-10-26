@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState, useEffect, useRef } from 'react';
 import { ProductContext } from '../context/productContext';
 
 export function Header(): JSX.Element {
@@ -9,18 +9,36 @@ export function Header(): JSX.Element {
         handleFilter
     } = useContext(ProductContext);
 
-    // Função wrapper para os filtros para evitar o reload da página
     const onFilterClick = (e: React.MouseEvent<HTMLAnchorElement>, filter?: string) => {
-        e.preventDefault(); // Impede o 'href' de pular para o topo
+        e.preventDefault();
         handleFilter(filter);
     };
+
+    const [isOpen, setIsOpen] = useState(false);
+
+    const dropdownRef = useRef<HTMLDivElement | null>(null);
+
+    // lida com cliques fora do componente
+    useEffect(() => {
+        function handleClickOutside(event: MouseEvent) {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+                setIsOpen(false);
+            }
+        }
+
+        document.addEventListener("mousedown", handleClickOutside);
+
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, []);
 
     return (
         <nav className="border-gray-200 bg-gradient-to-bl bg-black">
             <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-                <a href="https://flowbite.com/" className="flex items-center space-x-3 rtl:space-x-reverse">
+                <span className="flex items-center space-x-3 rtl:space-x-reverse">
                     <span className="self-center text-2xl font-semibold whitespace-nowrap text-white">Store</span>
-                </a>
+                </span>
                 <div className="flex md:order-2">
                     <button type="button" data-collapse-toggle="navbar-search" aria-controls="navbar-search"
                         aria-expanded="false"
@@ -41,7 +59,6 @@ export function Header(): JSX.Element {
                             </svg>
                             <span className="sr-only">Search icon</span>
                         </div>
-                        {/* --- O INPUT DE DESKTOP (JÁ ESTAVA CORRETO) --- */}
                         <input
                             type="text"
                             id="search-navbar"
@@ -72,7 +89,6 @@ export function Header(): JSX.Element {
                                     d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
                             </svg>
                         </div>
-                        {/* --- O INPUT MOBILE (CORRIGIDO) --- */}
                         <input
                             type="text"
                             id="search-navbar-mobile"
@@ -86,60 +102,80 @@ export function Header(): JSX.Element {
                     <ul
                         className="flex flex-col p-4 md:p-0 mt-4 font-medium border bg-black space-y-4 md:space-y-0 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-black">
                         <li>
-                            <a href="#" id="home"
+                            <a href="/" id="home"
                                 className="link-navbar clickable block py-2 px-3 text-white hover:bg-white hover:text-black md:hover:bg-white md:hover:rounded-sm md:text-white md:p-0 md:hover:text-black transition-all ease-linear"
                                 aria-current="page"
-                                // --- FUNCIONALIDADE ADICIONADA ---
-                                onClick={(e) => onFilterClick(e)}
                             >Home</a>
                         </li>
-                        <li>
-                            <a href="#"
-                                className="link-navbar block py-2 px-3 text-white hover:bg-white hover:text-black md:hover:bg-white md:hover:rounded-sm md:text-white md:p-0 md:hover:text-black transition-all ease-linear"
-                                id="categories-button" aria-expanded="false" data-dropdown-toggle="category-dropdown"
-                                data-dropdown-placement="bottom">Categories</a>
-
-                            <div className="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow-sm"
-                                id="category-dropdown">
-                                <ul className="py-2" aria-labelledby="user-menu-button">
-                                    <li>
-                                        <a href="#" data-id="men's-clothing"
-                                            className="cat clickable transicao block px-4 py-2 text-sm text-black hover:bg-black hover:text-white bg-white"
-                                            // --- FUNCIONALIDADE ADICIONADA ---
-                                            onClick={(e) => onFilterClick(e, "men's clothing")}
-                                        >
-                                            Men's Clothing
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#" data-id="women's-clothing"
-                                            className="cat clickable transicao block px-4 py-2 text-sm text-black hover:bg-black hover:text-white bg-white"
-                                            // --- FUNCIONALIDADE ADICIONADA ---
-                                            onClick={(e) => onFilterClick(e, "women's clothing")}
-                                        >
-                                            Women's Clothing
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#" data-id="jewelery"
-                                            className="cat clickable transicao block px-4 py-2 text-sm text-black hover:bg-black hover:text-white bg-white"
-                                            // --- FUNCIONALIDADE ADICIONADA ---
-                                            onClick={(e) => onFilterClick(e, "jewelery")}
-                                        >
-                                            Jewelery
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#" data-id="electronics"
-                                            className="cat clickable transicao block px-4 py-2 text-sm text-black hover:bg-black hover:text-white bg-white"
-                                            // --- FUNCIONALIDADE ADICIONADA ---
-                                            onClick={(e) => onFilterClick(e, "electronics")}
-                                        >
-                                            Electronics
-                                        </a>
-                                    </li>
-                                </ul>
+                        <li ref={dropdownRef} className='relative'>
+                            <div>
+                                <button
+                                    type='button'
+                                    className="link-navbar clickable block py-2 px-3 text-white hover:bg-white hover:text-black md:hover:bg-white md:hover:rounded-sm md:text-white md:p-0 md:hover:text-black transition-all ease-linear"
+                                    onClick={() => setIsOpen(!isOpen)}
+                                    aria-expanded={isOpen}
+                                    aria-haspopup="true"
+                                >Categories
+                                </button>
                             </div>
+
+                                <div className={`
+                                    absolute -left-9 z-50 my-1 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow-sm
+                                    transition-all duration-150 ease-out w-40 
+                                    ${isOpen ? 'opacity-100 visible scale-100' : 'opacity-0 invisible scale-95'}
+                                `}
+                                    id="category-dropdown">
+                                    <ul className="py-2" aria-labelledby="user-menu-button">
+                                        <li>
+                                            <a href="#" data-id="men's-clothing"
+                                                className="clickable block px-4 py-2 text-sm text-black hover:bg-black hover:text-white bg-white"
+                                                onClick={(e) => {
+                                                    onFilterClick(e, "men's clothing")
+                                                    setIsOpen(false)
+                                                }
+                                                }
+                                            >
+                                                Men's Clothing
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#" data-id="women's-clothing"
+                                                className="clickable block px-4 py-2 text-sm text-black hover:bg-black hover:text-white bg-white"
+                                                onClick={(e) => {
+                                                    onFilterClick(e, "women's clothing")
+                                                    setIsOpen(false)
+                                                }
+                                                }
+                                            >
+                                                Women's Clothing
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#" data-id="jewelery"
+                                                className="clickable block px-4 py-2 text-sm text-black hover:bg-black hover:text-white bg-white"
+                                                onClick={(e) => {
+                                                    onFilterClick(e, "jewelery")
+                                                    setIsOpen(false)
+                                                }
+                                                }
+                                            >
+                                                Jewelery
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#" data-id="electronics"
+                                                className="clickable block px-4 py-2 text-sm text-black hover:bg-black hover:text-white bg-white"
+                                                onClick={(e) => {
+                                                    onFilterClick(e, "electronics")
+                                                    setIsOpen(false)
+                                                }
+                                                }
+                                            >
+                                                Electronics
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
                         </li>
                         <li>
                             <a href="#"
