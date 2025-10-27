@@ -179,7 +179,7 @@ export function Header(): JSX.Element {
                                 </div>
                         </li>
                         <li>
-                            <a href="#"
+                            <a href="/cart"
                                 className="link-navbar block py-2 px-3 text-white hover:bg-white hover:text-black md:hover:bg-white md:hover:rounded-sm md:text-white md:p-0 md:hover:text-black transition-all ease-linear">Cart</a>
                         </li>
                     </ul>

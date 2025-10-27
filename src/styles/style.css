@@ -57,24 +57,27 @@ input:focus {
   transform: translateY(-0.15rem);
   transition: all 0.2s ease-in-out;
 }
-.linha{
+
+.linha {
   position: relative;
 }
+
 .linha::after {
-    content: "";
-    position: absolute;
-    width: 0%;
-    height: 1px;
-    bottom: -1px;
-    left: 0;
-    background-color: white;
-    transition: all 0.3s ease;
+  content: "";
+  position: absolute;
+  width: 0%;
+  height: 1px;
+  bottom: -1px;
+  left: 0;
+  background-color: white;
+  transition: all 0.3s ease;
 }
 
 .linha:hover::after {
-    width: 100%;
+  width: 100%;
 }
-.clickable{
+
+.clickable {
   cursor: pointer;
 }
 
@@ -93,4 +96,19 @@ input:focus {
 .right {
   top: 68%;
   left: 90.5%;
+}
+
+
+/* cart */
+
+.sombra {
+  box-shadow: -3px 3px 10px rgba(0, 0, 0, 0.32);
+}
+
+.prodsCart {
+  flex-direction: column;
+}
+
+.prodCart {
+  
 }

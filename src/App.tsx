@@ -6,11 +6,11 @@ import CartProvider from './context/cartContext.tsx';
 
 function App() {
     return (
-        <ProductProvider>
-            <CartProvider>
+        <CartProvider>
+            <ProductProvider>
                 <RouterProvider router={router} />
-            </CartProvider>
-        </ProductProvider>
+            </ProductProvider>
+        </CartProvider>
     )
 }
 
