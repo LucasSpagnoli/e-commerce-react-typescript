@@ -7,6 +7,13 @@ span {
   cursor: default;
 }
 
+.meio {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
 .link-navbar {
   padding: 0 0.3vw;
   text-align: center;
@@ -107,8 +114,16 @@ input:focus {
 
 .prodsCart {
   flex-direction: column;
+  align-items: center;
 }
 
-.prodCart {
-  
+.btnsCart {
+  display: flex;
+  flex-direction: column;
+}
+
+.price {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
 }

@@ -18,6 +18,7 @@ interface ProductContext {
     setScreenProducts: (value: React.SetStateAction<Product[]>) => void;
     handleFilter: (filter?: string) => void;
     handleSearch: () => void; 
+    loaded: boolean;
 }
 
 export const ProductContext = createContext({} as ProductContext);
@@ -27,6 +28,7 @@ function ProductProvider({ children }: ProductProviderProps) {
     const [screenProducts, setScreenProducts] = useState<Product[]>([])
     const [currentIndex, setCurrentIndex] = useState(0)
     const [searchBar, setSearchBar] = useState('')
+    const [loaded, setLoaded] = useState(false)
     const url = 'https://fakestoreapi.com/products'
     const cardsPerPage = 4
     const shownProducts = screenProducts.slice(
@@ -40,6 +42,7 @@ function ProductProvider({ children }: ProductProviderProps) {
             if (!('error' in response)) {
                 setProducts(response)
                 setScreenProducts(response)
+                setLoaded(true)
             }
         }
         loadData()
@@ -75,7 +78,8 @@ function ProductProvider({ children }: ProductProviderProps) {
                 setScreenProducts,
                 handleFilter, 
                 handleSearch,
-                cardsPerPage
+                cardsPerPage,
+                loaded
             }}>
             {children}
         </ProductContext.Provider>

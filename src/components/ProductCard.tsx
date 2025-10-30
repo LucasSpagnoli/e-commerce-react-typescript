@@ -9,10 +9,10 @@ interface ProductCardProps {
 export function ProductCard({ product }: ProductCardProps): JSX.Element {
     const { changeCart, cart } = useContext(CartContext)
     return (
-        <div className="card md:w-65 w-100 rounded-lg shadow-lg bg-gray-100 card-hover mt-6 md:mt-0 position-relative">
+        <div className="card md:w-65 w-70 rounded-lg shadow-lg bg-gray-100 card-hover mt-6 md:mt-0 position-relative">
             <a href="#">
                 <img
-                    className="rounded-t-lg w-75 px-6 pt-1 md:h-60 h-75"
+                    className="rounded-t-lg w-75 px-6 py-2 mt-2 md:h-60 h-75"
                     src={product.image}
                     alt={product.description}
                 />
