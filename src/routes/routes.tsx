@@ -1,10 +1,11 @@
 import { createBrowserRouter } from 'react-router-dom'
 
-import {Layout} from '../components/Layout.tsx'
-import {Home} from '../pages/Home.tsx'
-import {Cart} from '../pages/Cart.tsx'
+import { Layout } from '../components/Layout.tsx'
+import { Home } from '../pages/Home.tsx'
+import { Cart } from '../pages/Cart.tsx'
+import { Product } from '../pages/Product.tsx'
 
-export const router = createBrowserRouter ([
+export const router = createBrowserRouter([
     {
         element: <Layout />,
         children: [
@@ -20,10 +21,10 @@ export const router = createBrowserRouter ([
             //     path: '/login',
             //     element: <Login />
             // },
-            // {
-            //     path: '/product/:id',
-            //     element: <Product />
-            // }
+            {
+                path: '/product/:id',
+                element: <Product />
+            }
         ]
     }
 ])

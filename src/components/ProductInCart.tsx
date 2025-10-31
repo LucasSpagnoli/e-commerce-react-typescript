@@ -11,15 +11,19 @@ export function ProductInCart({ cartProduct }: ProductInCartProps): JSX.Element 
   return (
     <li className="flex items-center justify-between w-full p-4 bg-white rounded-lg shadow-md transition-all hover:shadow-lg">
       <div className="flex items-center gap-5">
-        <img
-          src={cartProduct.image}
-          alt={cartProduct.title}
-          className="w-20 h-20 object-contain rounded-md"
-        />
+        <a href={`/product/${cartProduct.id}`}>
+          <img
+            src={cartProduct.image}
+            alt={cartProduct.title}
+            className="w-20 h-20 object-contain rounded-md"
+          />
+        </a>
         <div>
-          <h5 className="text-md font-semibold text-gray-800 truncate max-w-56">
-            {cartProduct.title}
-          </h5>
+          <a href={`/product/${cartProduct.id}`}>
+            <h5 className="text-md font-semibold text-gray-800 truncate max-w-56">
+              {cartProduct.title}
+            </h5>
+          </a>
           <p className="text-sm text-gray-600 mt-1">
             ${cartProduct.price.toFixed(2)} cada
           </p>
@@ -34,7 +38,7 @@ export function ProductInCart({ cartProduct }: ProductInCartProps): JSX.Element 
           className="w-8 h-8 flex items-center justify-center bg-gray-200 text-gray-700 rounded-full text-lg font-bold hover:bg-gray-300 transition-all"
           onClick={() => changeCart(cartProduct, -1)}
         >
-          –
+          -
         </button>
         <span className="text-md font-semibold w-6 text-center">{cartProduct.quant}</span>
         <button

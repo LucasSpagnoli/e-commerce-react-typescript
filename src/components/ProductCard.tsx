@@ -10,7 +10,7 @@ export function ProductCard({ product }: ProductCardProps): JSX.Element {
     const { changeCart, cart } = useContext(CartContext)
     return (
         <div className="card md:w-65 w-70 rounded-lg shadow-lg bg-gray-100 card-hover mt-6 md:mt-0 position-relative">
-            <a href="#">
+            <a href={`/product/${product.id}`}>
                 <img
                     className="rounded-t-lg w-75 px-6 py-2 mt-2 md:h-60 h-75"
                     src={product.image}
@@ -18,7 +18,7 @@ export function ProductCard({ product }: ProductCardProps): JSX.Element {
                 />
             </a>
             <div className="p-5">
-                <a href="#">
+                <a href={`/product/${product.id}`}>
                     <h5 className="mb-2 text-md font-bold tracking-tight text-gray-800 truncate">
                         {product.title}
                     </h5>
@@ -46,8 +46,7 @@ export function ProductCard({ product }: ProductCardProps): JSX.Element {
                     <span className="text-xl font-bold text-gray-900 mb-1">
                         ${product.price.toFixed(2)}
                     </span>
-                    <a
-                        href="#"
+                    <button
                         className="btn text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-3 py-1.5 text-center focus:ring-gray-500"
                         onClick={(e) => {
                             e.preventDefault()
@@ -56,7 +55,7 @@ export function ProductCard({ product }: ProductCardProps): JSX.Element {
                         }}
                     >
                         Add to cart
-                    </a>
+                    </button>
                 </div>
             </div>
         </div>

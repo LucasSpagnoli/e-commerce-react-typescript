@@ -1,6 +1,7 @@
 import { useEffect, createContext, useState, type ReactNode } from 'react'
 import { getData } from '../scripts/api'
 import type { Product } from '../scripts/api'
+// import { useNavigate } from "react-router-dom";
 
 interface ProductProviderProps {
     children: ReactNode;
@@ -49,6 +50,8 @@ function ProductProvider({ children }: ProductProviderProps) {
     }, [])
 
     function handleFilter(filter: string = '') {
+        // const navigate = useNavigate()
+        // navigate("/")
         let filteredProducts: Product[];
         filteredProducts = filter
             ? products.filter(product => product.category === filter)
