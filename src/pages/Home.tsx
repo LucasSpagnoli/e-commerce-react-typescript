@@ -41,12 +41,24 @@ export function Home(): JSX.Element {
                                 <p className="mt-2">Descubra nossa coleção de itens mais recente.</p>
                             </div>
 
-                            <button className={currentIndex === 0 ? 'carousel-btn left bg-gray-200 hidden' : 'carousel-btn left bg-gray-200'} onClick={handlePrev}>
-                                {'<'}
+                            <button
+                                onClick={handlePrev}
+                                className={`absolute top-2/3 clickable left-18 -translate-y-1/2 p-3 rounded-full shadow-md border border-gray-300 bg-white text-gray-800 hover:bg-black hover:text-white transition-all duration-200 ${currentIndex === 0 ? 'opacity-0 pointer-events-none' : 'opacity-100'
+                                    }`}
+                            >
+                                ‹
                             </button>
-                            <button className={currentIndex + cardsPerPage >= screenProducts.length ? 'carousel-btn right bg-gray-200 hidden' : 'carousel-btn right bg-gray-200'} onClick={handleNext}>
-                                {'>'}
+
+                            <button
+                                onClick={handleNext}
+                                className={`absolute top-2/3 clickable right-18 -translate-y-1/2 p-3 rounded-full shadow-md border border-gray-300 bg-white text-gray-800 hover:bg-black hover:text-white transition-all duration-200 ${currentIndex + cardsPerPage >= screenProducts.length
+                                        ? 'opacity-0 pointer-events-none'
+                                        : 'opacity-100'
+                                    }`}
+                            >
+                                ›
                             </button>
+
 
                             <section className="products-container grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
                                 {shownProducts.map(product => (

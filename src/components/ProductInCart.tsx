@@ -25,7 +25,7 @@ export function ProductInCart({ cartProduct }: ProductInCartProps): JSX.Element 
             </h5>
           </a>
           <p className="text-sm text-gray-600 mt-1">
-            ${cartProduct.price.toFixed(2)} cada
+            ${cartProduct.price.toFixed(2)}
           </p>
           <p className="text-base font-semibold text-green-600 mt-1">
             Total: ${(cartProduct.price * cartProduct.quant).toFixed(2)}

@@ -12,6 +12,7 @@ interface CartContextType {
     changeCart: (product: Product, action: number) => void;
     removeFromCart: (productId: number) => void;
     clearCart: () => void;
+    uniqueCount: number;
 }
 
 interface CartProviderProps {
@@ -33,7 +34,7 @@ function CartProvider({ children }: CartProviderProps) {
     useEffect(() => {
         localStorage.setItem("cart", JSON.stringify(cart));
     }, [cart]);
-    
+
     function changeCart(productToChange: Product, action: number) {
         setCart(currentCart => {
             const existingProduct = currentCart.find(p => p.id === productToChange.id);
@@ -70,6 +71,12 @@ function CartProvider({ children }: CartProviderProps) {
         setCart([]);
     }
 
+    const uniqueCartProducts = cart.reduce((acc: ProductInCart[], prod) => {
+        if (!acc.find(p => p.id === prod.id)) acc.push(prod)
+        return acc
+    }, [])
+    const uniqueCount = uniqueCartProducts.length
+
     const prodQuant = cart.reduce((total, product) => total + product.quant, 0);
     const totalCost = cart.reduce((total, product) => total + (product.price * product.quant), 0);
 
@@ -81,7 +88,8 @@ function CartProvider({ children }: CartProviderProps) {
                 totalCost,
                 changeCart,
                 removeFromCart,
-                clearCart
+                clearCart,
+                uniqueCount
             }}
         >
             {children}

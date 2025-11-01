@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect, useRef } from 'react';
 import { type JSX } from 'react';
 import { ProductContext } from '../context/productContext';
+import { CartContext } from '../context/cartContext';
 import { useLocation } from 'react-router-dom'
 
 export function Header(): JSX.Element {
@@ -10,6 +11,8 @@ export function Header(): JSX.Element {
         handleSearch,
         handleFilter
     } = useContext(ProductContext);
+
+    const { uniqueCount } = useContext(CartContext)
 
     const onFilterClick = (e: React.MouseEvent<HTMLAnchorElement>, filter?: string) => {
         e.preventDefault();
@@ -81,80 +84,91 @@ export function Header(): JSX.Element {
                             aria-current="page"
                         >Home</a>
                     </li>
-                    <li ref={dropdownRef} className='relative'>
-                        <div>
-                            <button
-                                type='button'
-                                className="link-navbar clickable block py-2 px-3 text-white hover:bg-white hover:text-black md:hover:bg-white md:hover:rounded-sm md:text-white md:p-0 md:hover:text-black transition-all ease-linear"
-                                onClick={() => setIsOpen(!isOpen)}
-                                aria-expanded={isOpen}
-                                aria-haspopup="true"
-                            >Categories
-                            </button>
-                        </div>
+                    {location.pathname === "/" && (
+                        <li ref={dropdownRef} className='relative'>
+                            <div>
+                                <button
+                                    type='button'
+                                    className="link-navbar clickable block py-2 px-3 text-white hover:bg-white hover:text-black md:hover:bg-white md:hover:rounded-sm md:text-white md:p-0 md:hover:text-black transition-all ease-linear"
+                                    onClick={() => setIsOpen(!isOpen)}
+                                    aria-expanded={isOpen}
+                                    aria-haspopup="true"
+                                >Categories
+                                </button>
+                            </div>
 
-                        <div className={`
+                            <div className={`
                                     absolute -left-9 z-50 my-1 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow-sm
                                     transition-all duration-150 ease-out w-40 
                                     ${isOpen ? 'opacity-100 visible scale-100' : 'opacity-0 invisible scale-95'}
                                 `}
-                            id="category-dropdown">
-                            <ul className="py-2" aria-labelledby="user-menu-button">
-                                <li>
-                                    <a href="/" data-id="men's-clothing"
-                                        className="clickable block px-4 py-2 text-sm text-black hover:bg-black hover:text-white bg-white"
-                                        onClick={(e) => {
-                                            onFilterClick(e, "men's clothing")
-                                            setIsOpen(false)
-                                        }
-                                        }
-                                    >
-                                        Men's Clothing
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="/" data-id="women's-clothing"
-                                        className="clickable block px-4 py-2 text-sm text-black hover:bg-black hover:text-white bg-white"
-                                        onClick={(e) => {
-                                            onFilterClick(e, "women's clothing")
-                                            setIsOpen(false)
-                                        }
-                                        }
-                                    >
-                                        Women's Clothing
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="/" data-id="jewelery"
-                                        className="clickable block px-4 py-2 text-sm text-black hover:bg-black hover:text-white bg-white"
-                                        onClick={(e) => {
-                                            onFilterClick(e, "jewelery")
-                                            setIsOpen(false)
-                                        }
-                                        }
-                                    >
-                                        Jewelery
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="/" data-id="electronics"
-                                        className="clickable block px-4 py-2 text-sm text-black hover:bg-black hover:text-white bg-white"
-                                        onClick={(e) => {
-                                            onFilterClick(e, "electronics")
-                                            setIsOpen(false)
-                                        }
-                                        }
-                                    >
-                                        Electronics
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
+                                id="category-dropdown">
+                                <ul className="py-2" aria-labelledby="user-menu-button">
+                                    <li>
+                                        <a href="/" data-id="men's-clothing"
+                                            className="clickable block px-4 py-2 text-sm text-black hover:bg-black hover:text-white bg-white"
+                                            onClick={(e) => {
+                                                onFilterClick(e, "men's clothing")
+                                                setIsOpen(false)
+                                            }
+                                            }
+                                        >
+                                            Men's Clothing
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="/" data-id="women's-clothing"
+                                            className="clickable block px-4 py-2 text-sm text-black hover:bg-black hover:text-white bg-white"
+                                            onClick={(e) => {
+                                                onFilterClick(e, "women's clothing")
+                                                setIsOpen(false)
+                                            }
+                                            }
+                                        >
+                                            Women's Clothing
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="/" data-id="jewelery"
+                                            className="clickable block px-4 py-2 text-sm text-black hover:bg-black hover:text-white bg-white"
+                                            onClick={(e) => {
+                                                onFilterClick(e, "jewelery")
+                                                setIsOpen(false)
+                                            }
+                                            }
+                                        >
+                                            Jewelery
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="/" data-id="electronics"
+                                            className="clickable block px-4 py-2 text-sm text-black hover:bg-black hover:text-white bg-white"
+                                            onClick={(e) => {
+                                                onFilterClick(e, "electronics")
+                                                setIsOpen(false)
+                                            }
+                                            }
+                                        >
+                                            Electronics
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                    )}
+                    <li className="relative">
+                        <a
+                            href="/cart"
+                            className="flex clickable link-navbar items-center gap-2 py-2 px-3 text-white hover:bg-white hover:text-black md:hover:bg-white md:hover:rounded-sm md:text-white md:p-0 md:hover:text-black transition-all ease-linear"
+                        >
+                            Cart
+                            {/* Badge com número */}
+                            <span className="absolute -top-1 -right-4 bg-red-600 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+                                {uniqueCount}
+                            </span>
+                        </a>
                     </li>
-                    <li>
-                        <a href="/cart"
-                            className="link-navbar block py-2 px-3 text-white hover:bg-white hover:text-black md:hover:bg-white md:hover:rounded-sm md:text-white md:p-0 md:hover:text-black transition-all ease-linear">Cart</a>
-                    </li>
+
                 </ul>
             </div>
         </nav>

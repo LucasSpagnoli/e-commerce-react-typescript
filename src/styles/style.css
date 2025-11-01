@@ -89,13 +89,6 @@ input:focus {
   cursor: pointer;
 }
 
-.carousel-btn {
-  position: absolute;
-  font-size: 2rem;
-  border-radius: 0.5rem;
-  cursor: pointer;
-}
-
 .left {
   top: 68%;
   left: 8%;
