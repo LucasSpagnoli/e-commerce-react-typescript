@@ -9,13 +9,13 @@ export function ProductInCart({ cartProduct }: ProductInCartProps): JSX.Element 
   const { removeFromCart, changeCart } = useContext(CartContext)
 
   return (
-    <li className="flex items-center justify-between w-full p-4 bg-white rounded-lg shadow-md transition-all hover:shadow-lg">
+    <li className="flex sm:flex-row flex-col items-center justify-between w-full p-4 bg-white rounded-lg shadow-md transition-all hover:shadow-lg">
       <div className="flex items-center gap-5">
         <a href={`/product/${cartProduct.id}`}>
           <img
             src={cartProduct.image}
             alt={cartProduct.title}
-            className="w-20 h-20 object-contain rounded-md"
+            className="hidden sm:block w-20 h-20 object-contain rounded-md"
           />
         </a>
         <div>
@@ -33,24 +33,21 @@ export function ProductInCart({ cartProduct }: ProductInCartProps): JSX.Element 
         </div>
       </div>
 
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-2 pt-4 sm:pt-0">
         <button
-          className="w-8 h-8 flex items-center justify-center bg-gray-200 text-gray-700 rounded-full text-lg font-bold hover:bg-gray-300 transition-all"
-          onClick={() => changeCart(cartProduct, -1)}
-        >
+          className="sm:w-8 sm:h-8 w-4 h-4 flex clickable items-center justify-center bg-gray-200 text-gray-700 rounded-full sm:text-lg text-sm font-bold hover:bg-gray-300 transition-all pb-0.5 sm:pb-0"
+          onClick={() => changeCart(cartProduct, -1)}>
           -
         </button>
         <span className="text-md font-semibold w-6 text-center">{cartProduct.quant}</span>
         <button
-          className="w-8 h-8 flex items-center justify-center bg-black text-white rounded-full text-lg font-bold hover:bg-gray-800 transition-all"
-          onClick={() => changeCart(cartProduct, 1)}
-        >
+          className="sm:w-8 sm:h-8 w-4 h-4 flex clickable items-center justify-center bg-black text-white rounded-full sm:text-lg text-sm font-bold hover:bg-gray-800 transition-all pb-0.5 sm:pb-0"
+          onClick={() => changeCart(cartProduct, 1)}>
           +
         </button>
         <button
-          className="ml-3 w-8 h-8 flex items-center justify-center bg-red-100 text-red-600 rounded-full hover:bg-red-200 transition-all"
-          onClick={() => removeFromCart(cartProduct.id)}
-        >
+          className="ml-3 sm:w-8 sm:h-8 w-4 h-4 flex clicable items-center justify-center sm:bg-red-100 sm:text-red-600 rounded-full sm:hover:bg-red-200 transition-all"
+          onClick={() => removeFromCart(cartProduct.id)}>
           🗑️
         </button>
       </div>

@@ -1,7 +1,7 @@
 import { useEffect, createContext, useState, type ReactNode } from 'react'
 import { getData } from '../scripts/api'
 import type { Product } from '../scripts/api'
-// import { useNavigate } from "react-router-dom";
+import { useWindowWidth } from '../hooks/useWidth'
 
 interface ProductProviderProps {
     children: ReactNode;
@@ -10,15 +10,16 @@ interface ProductProviderProps {
 interface ProductContext {
     products: Product[];
     screenProducts: Product[];
-    shownProducts: Product[]; 
+    shownProducts: Product[];
     searchBar: string;
-    currentIndex: number; 
+    currentIndex: number;
     cardsPerPage: number;
+    setCardsPerPage: (value: number) => void;
     setSearchBar: (value: string) => void;
     setCurrentIndex: (value: React.SetStateAction<number>) => void;
     setScreenProducts: (value: React.SetStateAction<Product[]>) => void;
     handleFilter: (filter?: string) => void;
-    handleSearch: () => void; 
+    handleSearch: () => void;
     loaded: boolean;
 }
 
@@ -31,7 +32,8 @@ function ProductProvider({ children }: ProductProviderProps) {
     const [searchBar, setSearchBar] = useState('')
     const [loaded, setLoaded] = useState(false)
     const url = 'https://fakestoreapi.com/products'
-    const cardsPerPage = 4
+    const [cardsPerPage, setCardsPerPage] = useState(4)
+    const screenWidth = useWindowWidth()
     const shownProducts = screenProducts.slice(
         currentIndex,
         currentIndex + cardsPerPage
@@ -50,8 +52,6 @@ function ProductProvider({ children }: ProductProviderProps) {
     }, [])
 
     function handleFilter(filter: string = '') {
-        // const navigate = useNavigate()
-        // navigate("/")
         let filteredProducts: Product[];
         filteredProducts = filter
             ? products.filter(product => product.category === filter)
@@ -68,20 +68,33 @@ function ProductProvider({ children }: ProductProviderProps) {
         setCurrentIndex(0)
     }
 
+    useEffect(() => {
+        if (screenWidth > 1250) { 
+            setCardsPerPage(4);
+        } else if (screenWidth > 950) { 
+            setCardsPerPage(3);
+        } else if (screenWidth > 700) { 
+            setCardsPerPage(2); 
+        } else {
+            setCardsPerPage(1)
+        }
+    }, [screenWidth]);
+
     return (
         <ProductContext.Provider
-            value={{ 
-                products, 
-                screenProducts, 
-                shownProducts, 
+            value={{
+                products,
+                screenProducts,
+                shownProducts,
                 currentIndex,
-                searchBar, 
-                setSearchBar, 
-                setCurrentIndex, 
+                searchBar,
+                setSearchBar,
+                setCurrentIndex,
                 setScreenProducts,
-                handleFilter, 
+                handleFilter,
                 handleSearch,
                 cardsPerPage,
+                setCardsPerPage,
                 loaded
             }}>
             {children}

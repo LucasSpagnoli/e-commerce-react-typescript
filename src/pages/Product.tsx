@@ -95,8 +95,7 @@ export function Product(): JSX.Element {
                         {related.map(item => (
                             <div
                                 key={item.id}
-                                className="card rounded-lg shadow-md bg-gray-100 card-hover w-64"
-                            >
+                                className="card rounded-lg shadow-md bg-gray-100 card-hover w-64">
                                 <Link to={`/product/${item.id}`}>
                                     <img
                                         src={item.image}

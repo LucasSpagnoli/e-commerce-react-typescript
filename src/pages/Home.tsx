@@ -43,19 +43,17 @@ export function Home(): JSX.Element {
 
                             <button
                                 onClick={handlePrev}
-                                className={`absolute top-2/3 clickable left-18 -translate-y-1/2 p-3 rounded-full shadow-md border border-gray-300 bg-white text-gray-800 hover:bg-black hover:text-white transition-all duration-200 ${currentIndex === 0 ? 'opacity-0 pointer-events-none' : 'opacity-100'
-                                    }`}
-                            >
+                                className={`absolute top-2/3 clickable left-10 translate-y-10 p-3 rounded-full shadow-md border border-gray-300 bg-white text-gray-800 hover:bg-black hover:text-white transition-all duration-200 ${currentIndex === 0 ? 'opacity-0 pointer-events-none' : 'opacity-100'
+                                    }`}>
                                 ‹
                             </button>
 
                             <button
                                 onClick={handleNext}
-                                className={`absolute top-2/3 clickable right-18 -translate-y-1/2 p-3 rounded-full shadow-md border border-gray-300 bg-white text-gray-800 hover:bg-black hover:text-white transition-all duration-200 ${currentIndex + cardsPerPage >= screenProducts.length
+                                className={`absolute top-2/3 clickable right-10 translate-y-10 p-3 rounded-full shadow-md border border-gray-300 bg-white text-gray-800 hover:bg-black hover:text-white transition-all duration-200 ${currentIndex + cardsPerPage >= screenProducts.length
                                         ? 'opacity-0 pointer-events-none'
                                         : 'opacity-100'
-                                    }`}
-                            >
+                                    }`}>
                                 ›
                             </button>
 

@@ -159,11 +159,10 @@ export function Header(): JSX.Element {
                     <li className="relative">
                         <a
                             href="/cart"
-                            className="flex clickable link-navbar items-center gap-2 py-2 px-3 text-white hover:bg-white hover:text-black md:hover:bg-white md:hover:rounded-sm md:text-white md:p-0 md:hover:text-black transition-all ease-linear"
-                        >
-                            Cart
+                            className="flex clickable link-navbar items-center gap-2 py-2 px-3 text-white hover:bg-white hover:text-black md:hover:bg-white md:hover:rounded-sm md:text-white md:p-0 md:hover:text-black transition-all ease-linear">
+                            <p className='mx-auto clickable'>Cart</p>
                             {/* Badge com número */}
-                            <span className="absolute -top-1 -right-4 bg-red-600 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+                            <span className="absolute hidden md:flex -top-2 -right-3 bg-red-600 text-white text-xs font-bold rounded-full w-5 h-5 items-center justify-center">
                                 {uniqueCount}
                             </span>
                         </a>

@@ -19,10 +19,6 @@ interface CartProviderProps {
     children: ReactNode;
 }
 
-interface CartContext {
-
-}
-
 export const CartContext = createContext({} as CartContextType);
 
 function CartProvider({ children }: CartProviderProps) {
@@ -76,7 +72,6 @@ function CartProvider({ children }: CartProviderProps) {
         return acc
     }, [])
     const uniqueCount = uniqueCartProducts.length
-
     const prodQuant = cart.reduce((total, product) => total + product.quant, 0);
     const totalCost = cart.reduce((total, product) => total + (product.price * product.quant), 0);
 
