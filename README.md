@@ -5,7 +5,7 @@ Este é o front-end de um site de e-commerce moderno, construído com React, Typ
 O aplicativo busca produtos de uma API (Fake Store API) e permite que os usuários visualizem, pesquisem e filtrem os produtos em tempo real.
 
 (imagem do site ainda não pronto, vai ficar mais bonito)
-<img width="1897" height="894" alt="image" src="https://github.com/user-attachments/assets/d48dbb52-76bb-4a2b-af9a-b1f6d5dcb619" />
+<img width="1897" height="890" alt="image" src="https://github.com/user-attachments/assets/8bf85375-2dd1-4ca9-b4d8-b84749013b42" />
 
 ## ✨ Principais Funcionalidades
 
@@ -26,26 +26,6 @@ O aplicativo busca produtos de uma API (Fake Store API) e permite que os usuári
 * **Vite:** Como ambiente de desenvolvimento e bundler.
 * **Fake Store API:** Como fonte de dados (backend) para os produtos.
 
-## 🏛️ Arquitetura do Projeto
-
-A arquitetura deste projeto é centralizada em torno do `ProductContext`, que atua como a "única fonte da verdade" (Single Source of Truth) para os dados dos produtos.
-
-1.  **`ProductContext.tsx` (O Cérebro):**
-    * Contém todos os estados principais: `products` (lista completa), `screenProducts` (lista filtrada), `searchBar` (termo da busca) e `currentIndex` (índice do carrossel).
-    * Executa a busca inicial de dados da API com `useEffect`.
-    * Expõe as funções de manipulação de estado: `handleFilter()`, `handleSearch()`, `setCurrentIndex()`, etc.
-
-2.  **`Header.tsx` (O Consumidor de Ações):**
-    * Consome o contexto (`useContext`) para obter as funções de filtro/busca (`handleFilter`, `handleSearch`, `setSearchBar`).
-    * Gerencia o estado local do seu próprio menu dropdown (o `isOpen` com `useRef` para "clicar fora").
-
-3.  **`Home.tsx` (O Consumidor de Dados):**
-    * Consome o contexto para obter a lista de produtos já fatiada (`shownProducts`).
-    * Renderiza os cards usando `.map()`.
-    * Contém a lógica de navegação do carrossel (`handleNext`, `handlePrev`) que chama `setCurrentIndex` do contexto.
-
-4.  **`ProductCard.tsx` (Componente de Exibição):**
-    * Um componente "burro" que apenas recebe um `product` como prop e o exibe.
 
 ## 🏁 Como Rodar o Projeto Localmente
 
