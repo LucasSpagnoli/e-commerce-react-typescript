@@ -1,4 +1,4 @@
-# React E-Commerce Showcase (Frontend)
+# React E-Commerce React-Typescript (Frontend)
 
 Este é o front-end de um site de e-commerce moderno, construído com React, TypeScript e Tailwind CSS. O projeto demonstra o uso de hooks modernos, gerenciamento de estado centralizado com a Context API e um design totalmente responsivo e interativo.
 
