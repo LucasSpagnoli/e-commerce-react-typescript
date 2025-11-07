@@ -4,6 +4,8 @@ import { Layout } from '../components/Layout.tsx'
 import { Home } from '../pages/Home.tsx'
 import { Cart } from '../pages/Cart.tsx'
 import { Product } from '../pages/Product.tsx'
+import { Login } from '../pages/Login.tsx'
+import { Register } from '../pages/Register.tsx'
 
 export const router = createBrowserRouter([
     {
@@ -17,10 +19,14 @@ export const router = createBrowserRouter([
                 path: '/cart',
                 element: <Cart />
             },
-            // {
-            //     path: '/login',
-            //     element: <Login />
-            // },
+            {
+                path: '/login',
+               element: <Login />
+            },
+            {
+                path: '/register',
+               element: <Register />
+            },
             {
                 path: '/product/:id',
                 element: <Product />

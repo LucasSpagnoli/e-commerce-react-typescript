@@ -22,7 +22,7 @@ export function Footer(): JSX.Element {
                     </ul>
                 </div>
                 <hr className="my-6 border-white sm:mx-auto lg:my-8" />
-                <span className="block text-sm text-white sm:text-center ">© 2025 <a href="" className="linha">Lucas Spagnoli</a>.
+                <span className="block text-sm text-white sm:text-center ">© 2025 <a href="https://github.com/LucasSpagnoli" className="linha">Lucas Spagnoli</a>.
                     All Rights Reserved.</span>
             </div>
         </footer>
