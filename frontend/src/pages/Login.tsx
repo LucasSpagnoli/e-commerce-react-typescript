@@ -1,5 +1,5 @@
 import { type JSX, useContext } from "react";
-import { AuthForm } from "../components/authForm";
+import { AuthForm } from "../components/AuthForm";
 import { useNavigate } from 'react-router-dom'
 import { AuthContext } from "../context/authContext";
 import { login } from "../services/auth";
