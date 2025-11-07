@@ -1,0 +1,196 @@
+import React, { useContext, useState, useEffect, useRef } from 'react';
+import { type JSX } from 'react';
+import { ProductContext } from '../context/productContext';
+import { CartContext } from '../context/cartContext';
+import { useLocation } from 'react-router-dom'
+
+export function Header(): JSX.Element {
+    const {
+        searchBar,
+        setSearchBar,
+        handleSearch,
+        handleFilter
+    } = useContext(ProductContext);
+
+    const { uniqueCount } = useContext(CartContext)
+
+    const onFilterClick = (e: React.MouseEvent<HTMLAnchorElement>, filter?: string) => {
+        e.preventDefault();
+
+        handleFilter(filter);
+    };
+
+    const location = useLocation()
+
+    const [isOpen, setIsOpen] = useState(false);
+
+    const dropdownRef = useRef<HTMLLIElement | null>(null);
+
+    // lida com cliques fora do componente
+    useEffect(() => {
+        function handleClickOutside(event: MouseEvent) {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+                setIsOpen(false);
+            }
+        }
+
+        document.addEventListener("mousedown", handleClickOutside);
+
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, []);
+
+    return (
+        <nav className="border-gray-200 bg-linear-to-bl bg-black">
+            <div className="max-w-7xl flex flex-wrap items-center justify-between mx-auto p-4">
+                <span className="flex items-center space-x-3 rtl:space-x-reverse">
+                    <span className="self-center text-2xl font-semibold whitespace-nowrap text-white">Store</span>
+                </span>
+
+
+                {location.pathname === "/" && (
+                    <>
+                        <div className="flex">
+                            <div className="relative hidden md:block">
+                                <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                                    <svg className="w-4 h-4 text-gray-900" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                        viewBox="0 0 20 20">
+                                        <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
+                                            d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+                                    </svg>
+                                    <span className="sr-only">Search icon</span>
+                                </div>
+                                <input
+                                    type="text"
+                                    id="search-navbar"
+                                    className="block w-70 p-2 ps-10 text-sm text-gray-900 border rounded-lg bg-white"
+                                    placeholder="Search..."
+                                    value={searchBar}
+                                    onChange={(e) => setSearchBar(e.target.value)}
+                                    onKeyDown={(e) => { if (e.key === 'Enter') handleSearch(); }}
+                                />
+                            </div>
+                        </div>
+                    </>
+                )}
+
+
+                <ul
+                    className="flex flex-col p-4 md:p-0 mt-4 font-medium border bg-black space-y-4 md:space-y-0 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-black">
+                    <li>
+                        <a href="/" id="home"
+                            className="link-navbar clickable block py-2 px-3 text-white hover:bg-white hover:text-black md:hover:bg-white md:hover:rounded-sm md:text-white md:p-0 md:hover:text-black transition-all ease-linear"
+                            aria-current="page"
+                        >Home</a>
+                    </li>
+                    {location.pathname === "/" && (
+                        <li ref={dropdownRef} className='relative'>
+                            <div>
+                                <button
+                                    type='button'
+                                    className="link-navbar clickable block py-2 px-3 text-white hover:bg-white hover:text-black md:hover:bg-white md:hover:rounded-sm md:text-white md:p-0 md:hover:text-black transition-all ease-linear"
+                                    onClick={() => setIsOpen(!isOpen)}
+                                    aria-expanded={isOpen}
+                                    aria-haspopup="true"
+                                >Categories
+                                </button>
+                            </div>
+
+                            <div className={`
+                                    absolute -left-9 z-50 my-1 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow-sm
+                                    transition-all duration-150 ease-out w-40 
+                                    ${isOpen ? 'opacity-100 visible scale-100' : 'opacity-0 invisible scale-95'}
+                                `}
+                                id="category-dropdown">
+                                <ul className="py-2" aria-labelledby="user-menu-button">
+                                    <li>
+                                        <a href="/" data-id="men's-clothing"
+                                            className="clickable block px-4 py-2 text-sm text-black hover:bg-black hover:text-white bg-white"
+                                            onClick={(e) => {
+                                                onFilterClick(e, "men's clothing")
+                                                setIsOpen(false)
+                                            }
+                                            }
+                                        >
+                                            Men's Clothing
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="/" data-id="women's-clothing"
+                                            className="clickable block px-4 py-2 text-sm text-black hover:bg-black hover:text-white bg-white"
+                                            onClick={(e) => {
+                                                onFilterClick(e, "women's clothing")
+                                                setIsOpen(false)
+                                            }
+                                            }
+                                        >
+                                            Women's Clothing
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="/" data-id="jewelery"
+                                            className="clickable block px-4 py-2 text-sm text-black hover:bg-black hover:text-white bg-white"
+                                            onClick={(e) => {
+                                                onFilterClick(e, "jewelery")
+                                                setIsOpen(false)
+                                            }
+                                            }
+                                        >
+                                            Jewelery
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="/" data-id="electronics"
+                                            className="clickable block px-4 py-2 text-sm text-black hover:bg-black hover:text-white bg-white"
+                                            onClick={(e) => {
+                                                onFilterClick(e, "electronics")
+                                                setIsOpen(false)
+                                            }
+                                            }
+                                        >
+                                            Electronics
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                    )}
+                    <li className="relative">
+                        <a
+                            href="/cart"
+                            className="flex clickable link-navbar items-center gap-2 py-2 px-3 text-white hover:bg-white hover:text-black md:hover:bg-white md:hover:rounded-sm md:text-white md:p-0 md:hover:text-black transition-all ease-linear">
+                            <p className='mx-auto clickable'>Cart</p>
+                            {/* Badge com número */}
+                            <span className="absolute hidden md:flex -top-2 -right-3 bg-red-600 text-white text-xs font-bold rounded-full w-5 h-5 items-center justify-center">
+                                {uniqueCount}
+                            </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a
+                            href="/login"
+                            className="flex clickable link-navbar items-center gap-2 py-2 px-3 text-white hover:bg-white hover:text-black md:hover:bg-white md:hover:rounded-sm md:text-white md:p-0 md:hover:text-black transition-all ease-linear mt-0.5"
+                        >
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                strokeWidth={2}
+                                stroke="currentColor"
+                                className="w-5 h-5"
+                            >
+                                <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.5 20.25a8.25 8.25 0 0115 0"
+                                />
+                            </svg>
+                        </a>
+                    </li>
+
+                </ul>
+            </div>
+        </nav>
+    )
+}
