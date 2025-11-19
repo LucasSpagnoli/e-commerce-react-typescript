@@ -7,6 +7,8 @@ import { Product } from '../pages/Product.tsx'
 import { Login } from '../pages/Login.tsx'
 import { Register } from '../pages/Register.tsx'
 
+import { PrivateRoute } from './privateRoutes.tsx'
+
 export const router = createBrowserRouter([
     {
         element: <Layout />,
@@ -17,15 +19,19 @@ export const router = createBrowserRouter([
             },
             {
                 path: '/cart',
-                element: <Cart />
+                element: (
+                    <PrivateRoute >
+                        <Cart />
+                    </PrivateRoute>
+                )
             },
             {
                 path: '/login',
-               element: <Login />
+                element: <Login />
             },
             {
                 path: '/register',
-               element: <Register />
+                element: <Register />
             },
             {
                 path: '/product/:id',

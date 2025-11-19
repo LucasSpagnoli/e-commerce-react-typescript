@@ -11,7 +11,7 @@ export function Register(): JSX.Element {
     const handleRegister = async (data: { email: string; password: string; username?: string }) => {
         try {
             const response = await register(data.email, data.username!, data.password);
-            setUser({ username: response.user.username, email: response.user.email });
+            setUser({ username: response.user.username, email: response.user.email, token: response.token });
             navigate('/');
         } catch (error) {
             console.error('Erro no registro:', error);

@@ -1,13 +1,17 @@
-import React, { useContext, type JSX } from 'react';
+import { useContext, type JSX } from 'react';
 import type { Product } from '../scripts/api';
 import { CartContext } from '../context/cartContext'
+import { AuthContext } from "../context/authContext";
+import { useNavigate } from 'react-router-dom';
 
 interface ProductCardProps {
     product: Product;
 }
 
 export function ProductCard({ product }: ProductCardProps): JSX.Element {
+    const { isLogged } = useContext(AuthContext)
     const { changeCart, cart } = useContext(CartContext)
+    const navigate = useNavigate();
     return (
         <div className="card md:w-65 w-70 rounded-lg shadow-lg bg-gray-100 card-hover mt-6 md:mt-0 position-relative">
             <a href={`/product/${product.id}`}>
@@ -49,9 +53,14 @@ export function ProductCard({ product }: ProductCardProps): JSX.Element {
                     <button
                         className="btn text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-3 py-1.5 text-center focus:ring-gray-500"
                         onClick={(e) => {
-                            e.preventDefault()
-                            changeCart(product, 1)
-                            console.log(cart)
+                            if (isLogged) {
+                                e.preventDefault()
+                                changeCart(product, 1)
+                                console.log(cart)
+                            } else {
+                                e.preventDefault()
+                                navigate('/login');
+                            }
                         }}
                     >
                         Add to cart

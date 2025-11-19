@@ -4,8 +4,9 @@ interface AuthContextType {
     username: string;
     email: string;
     isLogged: boolean;
-    login: (userData: { username: string; email: string }) => void;
+    login: (userData: { username: string; email: string; token: string }) => void;
     logout: () => void;
+    loading: boolean;
 }
 
 interface AuthProviderProps {
@@ -15,14 +16,16 @@ interface AuthProviderProps {
 export const AuthContext = createContext({} as AuthContextType);
 
 function AuthProvider({ children }: AuthProviderProps) {
-    const [username, setUsername] = useState('')
-    const [email, setEmail] = useState('')
-    const [isLogged, setIsLogged] = useState(false)
+    const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
+    const [isLogged, setIsLogged] = useState(false);
+    const [loading, setLoading] = useState(true)
 
-    const login = (userData: { username: string; email: string }) => {
+    const login = (userData: { username: string; email: string; token: string }) => {
         setUsername(userData.username);
         setEmail(userData.email);
         setIsLogged(true);
+        localStorage.setItem("token", userData.token);
     };
 
     const logout = () => {
@@ -33,25 +36,18 @@ function AuthProvider({ children }: AuthProviderProps) {
     };
 
     useEffect(() => {
-        const token = localStorage.getItem('token')
+        const token = localStorage.getItem('token');
         if (token) {
-            setIsLogged(true)
+            setIsLogged(true);
         }
-    }, [])
+        setLoading(false)
+    }, []);
 
     return (
-        <AuthContext.Provider
-            value={{
-                username,
-                email,
-                isLogged,
-                login,
-                logout
-            }}
-        >
+        <AuthContext.Provider value={{ username, email, isLogged, login, logout, loading }}>
             {children}
         </AuthContext.Provider>
-    )
+    );
 }
 
 export default AuthProvider;

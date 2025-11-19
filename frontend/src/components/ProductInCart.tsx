@@ -1,4 +1,4 @@
-import React, { useContext, type JSX } from 'react'
+import { useContext, type JSX } from 'react'
 import { CartContext, type ProductInCart } from '../context/cartContext'
 
 interface ProductInCartProps {
