@@ -3,6 +3,8 @@ import { useState } from "react";
 interface AuthFormProps {
     type: 'login' | 'register';
     onSubmit: (data: FormData) => void;
+    emailError?: boolean;
+    passwordError?: boolean;
 }
 
 interface FormData {
@@ -12,7 +14,7 @@ interface FormData {
 }
 
 
-export function AuthForm({ type, onSubmit }: AuthFormProps) {
+export function AuthForm({ type, onSubmit, emailError, passwordError }: AuthFormProps) {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [username, setUsername] = useState("");
@@ -51,7 +53,12 @@ export function AuthForm({ type, onSubmit }: AuthFormProps) {
                     type="email"
                     value={email}
                     onChange={e => setEmail(e.target.value)}
-                    className="w-full border border-gray-300 rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black"
+                    className={
+                        "w-full border rounded-xl px-3 py-2 focus:outline-none focus:ring-2 " +
+                        (emailError
+                            ? "border-red-500 focus:ring-red-400"
+                            : "border-gray-300 focus:ring-black")
+                    }
                     placeholder="user@email.com"
                     required
                 />
@@ -66,7 +73,12 @@ export function AuthForm({ type, onSubmit }: AuthFormProps) {
                     type="password"
                     value={password}
                     onChange={e => setPassword(e.target.value)}
-                    className="w-full border border-gray-300 rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black"
+                    className={
+                        "w-full border rounded-xl px-3 py-2 focus:outline-none focus:ring-2 " +
+                        (passwordError
+                            ? "border-red-500 focus:ring-red-400"
+                            : "border-gray-300 focus:ring-black")
+                    }
                     placeholder="••••••••"
                     required
                 />

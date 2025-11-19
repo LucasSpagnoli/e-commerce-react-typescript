@@ -7,13 +7,13 @@ export const register = async (req: Request, res: Response) => {
     try {
         const { email, username, password } = req.body
         const userExists = await prisma.user.findFirst({
-            where: { OR: [{ email }, { username }] }
+            where: { OR: [{ email }] }
         })
 
         console.log('Register attempt:', req.body);
 
         if (userExists) {
-            return res.status(400).json({ error: "Email ou nome já cadastrados" })
+            return res.status(400).json({ error: "Email já cadastrado" })
         }
 
         const hashedPassword = await bcrypt.hash(password, 10)
@@ -43,15 +43,15 @@ export const login = async (req: Request, res: Response) => {
         const { email, password } = req.body
 
         const user = await prisma.user.findUnique({ where: { email } })
-
+        
         if (!user) {
-            return res.status(401).json({ error: 'Credenciais inválidas ' })
+            return res.status(401).json({ error: 'Email inválido' })
         }
-
+        
         const correctPassword = await bcrypt.compare(password, user.password)
 
-        if (!correctPassword){
-            return res.status(401).json({ error: 'Credenciais inválidas' })
+        if (!correctPassword) {
+            return res.status(402).json({ error: 'Senha inválida' })
         }
 
         const token = jwt.sign(

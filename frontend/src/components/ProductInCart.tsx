@@ -46,7 +46,7 @@ export function ProductInCart({ cartProduct }: ProductInCartProps): JSX.Element 
           +
         </button>
         <button
-          className="ml-3 sm:w-8 sm:h-8 w-4 h-4 flex clicable items-center justify-center sm:bg-red-100 sm:text-red-600 rounded-full sm:hover:bg-red-200 transition-all"
+          className="clickable ml-3 sm:w-8 sm:h-8 w-4 h-4 flex clicable items-center justify-center sm:bg-red-100 sm:text-red-600 rounded-full sm:hover:bg-red-200 transition-all"
           onClick={() => removeFromCart(cartProduct.id)}>
           🗑️
         </button>

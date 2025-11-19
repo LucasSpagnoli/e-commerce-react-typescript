@@ -162,7 +162,7 @@ export function Header(): JSX.Element {
                             className="flex clickable link-navbar items-center gap-2 py-2 px-3 text-white hover:bg-white hover:text-black md:hover:bg-white md:hover:rounded-sm md:text-white md:p-0 md:hover:text-black transition-all ease-linear">
                             <p className='mx-auto clickable'>Cart</p>
                             {/* Badge com número */}
-                            <span className="absolute hidden md:flex -top-2 -right-3 bg-red-600 text-white text-xs font-bold rounded-full w-5 h-5 items-center justify-center">
+                            <span className="clickable absolute hidden md:flex -top-2 -right-3 bg-red-600 text-white text-xs font-bold rounded-full w-5 h-5 items-center justify-center">
                                 {uniqueCount}
                             </span>
                         </a>
@@ -170,7 +170,7 @@ export function Header(): JSX.Element {
                     <li>
                         <a
                             href="/login"
-                            className="flex clickable link-navbar items-center gap-2 py-2 px-3 text-white hover:bg-white hover:text-black md:hover:bg-white md:hover:rounded-sm md:text-white md:p-0 md:hover:text-black transition-all ease-linear mt-0.5"
+                            className="flex clickable link-navbar items-center gap-2 py-3 px-3 text-white hover:bg-white hover:text-black md:hover:bg-white md:hover:rounded-sm md:text-white md:p-0 md:hover:text-black transition-all ease-linear mt-0.5"
                         >
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"

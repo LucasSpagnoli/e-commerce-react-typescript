@@ -1,4 +1,4 @@
-import { type JSX, useContext } from "react";
+import { type JSX, useContext, useState } from "react";
 import { AuthForm } from "../components/AuthForm";
 import { useNavigate } from 'react-router-dom'
 import { AuthContext } from "../context/authContext";
@@ -7,13 +7,24 @@ import { login } from "../services/auth";
 export function Login(): JSX.Element {
     const navigate = useNavigate();
     const { login: setUser, isLogged, logout } = useContext(AuthContext);
-
+    const [emailCerto, setEmailCerto] = useState(true)
+    const [senhaCerta, setSenhaCerta] = useState(true)
     const handleLogin = async (data: { email: string; password: string }) => {
+        setEmailCerto(true);
+        setSenhaCerta(true);
         try {
             const response = await login(data.email, data.password);
             setUser({ username: response.user.username, email: response.user.email, token: response.token });
             navigate('/');
-        } catch (error) {
+        } catch (error: any) {
+            const status = error.response.status
+
+            if (status == 401) {
+                setEmailCerto(false)
+            }
+            if (status == 402) {
+                setSenhaCerta(false)
+            }
             console.error("Erro no login:", error);
         }
     };
@@ -26,7 +37,15 @@ export function Login(): JSX.Element {
                 </h1>
                 {!isLogged ? (
                     <>
-                        <AuthForm type="login" onSubmit={handleLogin} />
+                        <AuthForm
+                            type="login"
+                            onSubmit={handleLogin}
+                            emailError={!emailCerto}
+                            passwordError={!senhaCerta}
+                        />
+
+                        {!senhaCerta && <p className="text-red-600">Senha incorreta</p>}
+                        {!emailCerto && <p className="text-red-600">Email incorreto</p>}
                         <p className="text-center text-sm text-gray-600 mt-4">
                             Não tem uma conta?{" "}
                             <a href="/register" className="text-black font-medium hover:underline">
@@ -40,7 +59,7 @@ export function Login(): JSX.Element {
                             logout();
                             navigate('/');
                         }}
-                        className="mt-4 w-full py-2 text-center bg-red-600 text-white font-semibold rounded-lg shadow hover:bg-red-700 active:bg-red-800 transition-all"
+                        className=" clickable mt-4 w-full py-2 text-center bg-red-600 text-white font-semibold rounded-lg shadow hover:bg-red-700 active:bg-red-800 transition-all"
                     >
                         Logout
                     </button>
