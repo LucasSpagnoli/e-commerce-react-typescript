@@ -1,5 +1,5 @@
 import { createContext, type ReactNode, useEffect, useState } from 'react'
-
+import { getUserData } from '../services/auth';
 interface AuthContextType {
     username: string;
     email: string;
@@ -36,11 +36,26 @@ function AuthProvider({ children }: AuthProviderProps) {
     };
 
     useEffect(() => {
-        const token = localStorage.getItem('token');
-        if (token) {
-            setIsLogged(true);
+        const recoverUser = async () => {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                setLoading(false);
+                return;
+            }
+            try {
+                const user = await getUserData(token);
+
+                setUsername(user.username);
+                setEmail(user.email);
+                setIsLogged(true);
+            } catch (error) {
+                console.error('Sessão inválida', error);
+                logout()
+            } finally {
+                setLoading(false)
+            }
         }
-        setLoading(false)
+        recoverUser()
     }, []);
 
     return (

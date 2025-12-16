@@ -6,7 +6,7 @@ import { login } from "../services/auth";
 
 export function Login(): JSX.Element {
     const navigate = useNavigate();
-    const { login: setUser, isLogged, logout } = useContext(AuthContext);
+    const { login: setUser, isLogged, logout, username } = useContext(AuthContext);
     const [emailCerto, setEmailCerto] = useState(true)
     const [senhaCerta, setSenhaCerta] = useState(true)
     const handleLogin = async (data: { email: string; password: string }) => {
@@ -32,11 +32,12 @@ export function Login(): JSX.Element {
     return (
         <main className="flex flex-col items-center justify-center min-h-[80vh] px-4">
             <div className="w-full max-w-sm bg-gray-200 shadow-md rounded-2xl p-8">
-                <h1 className="text-2xl font-semibold text-center mb-6 text-gray-800">
-                    Login
-                </h1>
+
                 {!isLogged ? (
                     <>
+                        <h1 className="text-2xl font-semibold text-center mb-6 text-gray-800">
+                            Login
+                        </h1>
                         <AuthForm
                             type="login"
                             onSubmit={handleLogin}
@@ -54,15 +55,20 @@ export function Login(): JSX.Element {
                         </p>
                     </>
                 ) : (
-                    <button
-                        onClick={() => {
-                            logout();
-                            navigate('/');
-                        }}
-                        className=" clickable mt-4 w-full py-2 text-center bg-red-600 text-white font-semibold rounded-lg shadow hover:bg-red-700 active:bg-red-800 transition-all"
-                    >
-                        Logout
-                    </button>
+                    <>
+                        <h1 className="text-2xl font-semibold text-center mb-6 text-gray-800">
+                            Olá, {username}!
+                        </h1>
+                        <button
+                            onClick={() => {
+                                logout();
+                                navigate('/');
+                            }}
+                            className=" clickable mt-4 w-full py-2 text-center bg-red-600 text-white font-semibold rounded-lg shadow hover:bg-red-700 active:bg-red-800 transition-all"
+                        >
+                            Logout
+                        </button>
+                    </>
                 )}
             </div>
         </main>

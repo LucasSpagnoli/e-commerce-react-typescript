@@ -15,3 +15,10 @@ export const login = async (email: string, password: string) => {
 export const logout = () => {
   localStorage.removeItem('token');
 };
+
+export const getUserData = async (token: string) => {
+  const response = await api.get('auth/me', {
+    headers: {Authorization: `Bearer ${token}`}
+  });
+  return response.data;
+}
